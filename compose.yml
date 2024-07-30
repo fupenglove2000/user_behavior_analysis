@@ -1,0 +1,19 @@
+services:
+  user_behavior_anaslysis:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      network: host
+      args:
+        http_proxy: http://127.0.0.1:3128/
+        https_proxy: http://127.0.0.1:3128/
+    volumes:
+      - ./reports:/app/reports
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    user: "1000:1000"
+    logging:
+      driver: json-file
+      options:
+        max-file: '3'
+        max-size: 500m
